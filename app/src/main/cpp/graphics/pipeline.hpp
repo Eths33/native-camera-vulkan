@@ -18,7 +18,7 @@
 #ifndef NCV_GRAPHICS_PIPELINE_HPP
 #define NCV_GRAPHICS_PIPELINE_HPP
 
-#include <vulkan_hpp/vulkan.hpp>
+#include <vulkan/vulkan.hpp>
 
 class AAssetManager;
 

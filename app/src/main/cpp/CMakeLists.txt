@@ -70,11 +70,16 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/metadata/version.cpp
 add_library(app_version SHARED ${CMAKE_CURRENT_SOURCE_DIR}/metadata/version.cpp)
 add_library(native-camera-vulkan SHARED ${SOURCES})
 
+message(STATUS "The env LIBRARIES_ROOT variable has $ENV{LIBRARIES_ROOT}")
+message(STATUS "The LIBRARIES_ROOT variable has ${LIBRARIES_ROOT}")
+message(STATUS "The env VULKAN_SDK variable has $ENV{VULKAN_SDK}")
+message(STATUS "The VULKAN_SDK variable has ${VULKAN_SDK}")
+
 include_directories(${ANDROID_NDK}/sources/android/native_app_glue
-        $ENV{LIBRARIES_ROOT}/vulkan
+        $ENV{VULKAN_SDK}/Include
         $ENV{LIBRARIES_ROOT}/vulkan_hpp
         $ENV{LIBRARIES_ROOT}/stb
-        $ENV{LIBRARIES_ROOT}/glm
+        #$ENV{LIBRARIES_ROOT}/glm
         .)
 
 target_link_libraries(native-camera-vulkan

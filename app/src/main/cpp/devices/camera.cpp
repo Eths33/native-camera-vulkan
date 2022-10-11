@@ -59,7 +59,10 @@ namespace devices
         if(m_ids->numCameras < 1)
             throw runtime_error("No cameras found.");
 
+        __android_log_print(ANDROID_LOG_DEBUG, "Greg", "Number of cameras found : %d",m_ids->numCameras);
+
         string selected_camera;
+        int selected_camera_id = -1;
 
         for(uint32_t i = 0; i < m_ids->numCameras; ++i)
         {
@@ -75,14 +78,26 @@ namespace devices
 
                 // Select which camera to use (front or back)
 
-                if(facing == ACAMERA_LENS_FACING_BACK)
+                const char * camStrings[3] = {"Front", "Back", "External"};
+                if(facing < 3)
+                    __android_log_print(ANDROID_LOG_DEBUG, "Greg", "Camera[%d] : %s",i, camStrings[facing]);
+                else
+                    __android_log_print(ANDROID_LOG_DEBUG, "Greg", "Camera[%d] : facing error",i);
+
+                if(facing == ACAMERA_LENS_FACING_BACK) {
                     selected_camera = string(cam_id);
+                    selected_camera_id = i;
+                }
             }
             ACameraMetadata_free(metadata);
         }
 
+        selected_camera = "1";
+        selected_camera_id = 1;
+        __android_log_print(ANDROID_LOG_DEBUG, "Greg", "Camera selected idx = %d, str = %s",selected_camera_id, selected_camera.c_str());
+
         if(selected_camera.size() < 1)
-            throw runtime_error("Cannot find appropriate device.");
+            throw runtime_error("Cannot find appropriate device. 85");
 
         {
             auto pt = m_device.release();
@@ -119,7 +134,7 @@ namespace devices
         result = ACaptureSessionOutputContainer_add(m_outputs.get(), m_img_reader_output.get());
 
         if(result != ACAMERA_OK)
-            throw runtime_error("Couldn't add image reader output session to container.");
+            throw runtime_error("Couldn't add image reader output session to container. 122");
 
         {
             auto pt = m_session.release();
@@ -129,7 +144,7 @@ namespace devices
         }
 
         if(result != ACAMERA_OK)
-            throw runtime_error("Couldn't create capture session.");
+            throw runtime_error("Couldn't create capture session 132.");
 
         {
             auto pt = m_capture_req.release();
@@ -138,7 +153,7 @@ namespace devices
         }
 
         if(result != ACAMERA_OK)
-            throw runtime_error("Couldn't create capture request.");
+            throw runtime_error("Couldn't create capture request 141.");
 
         {
             auto pt = m_target.release();
@@ -147,7 +162,7 @@ namespace devices
         }
 
         if(result != ACAMERA_OK)
-            throw runtime_error("Couldn't create camera output target.");
+            throw runtime_error("Couldn't create camera output target. 150");
 
         result = ACaptureRequest_addTarget(m_capture_req.get(), m_target.get());
 

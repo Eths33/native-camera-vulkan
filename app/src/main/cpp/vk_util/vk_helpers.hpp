@@ -20,7 +20,7 @@
 
 #include <utilities/log.hpp>
 #include <utilities/helpers.hpp>
-#include <vulkan_hpp/vulkan.hpp>
+#include <vulkan/vulkan.hpp>
 
 #ifdef NCV_PROFILING_ENABLED
 constexpr bool __ncv_profiling_enabled = true;

@@ -18,7 +18,9 @@
 #ifndef NCV_RESOURCES_BASE_HPP
 #define NCV_RESOURCES_BASE_HPP
 
-#include <vulkan_hpp/vulkan.hpp>
+#include <vulkan/vulkan.hpp>
+//#include <vulkan/vulkan.h> // in android
+//#include <vulkan.hpp> // in vulkan sdk install
 
 namespace graphics{ namespace resources{
 
